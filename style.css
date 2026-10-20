@@ -1,0 +1,390 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+:root {
+    --primary: #1e40af;
+    --secondary: #f97316;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --light: #f1f5f9;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --ref: #8b5cf6;
+    --excel: #107C41;
+    --import-btn: #2563eb;
+    --mile: #0891b2;
+    --mile-bg: #ecfeff;
+    --radius-lg: 14px;
+    --radius-sm: 6px;
+    --shadow-sm: 0 2px 6px rgba(0,0,0,0.05);
+}
+body {
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+    min-height: 100vh;
+    padding-bottom: 60px;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary), #1d4ed8);
+    color: white;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+}
+header h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+header p {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+main {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 20px 15px;
+}
+
+.top-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.export-btn {
+    background: linear-gradient(135deg, var(--excel), #0c5f30);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s;
+}
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 124, 65, 0.3);
+}
+.import-btn {
+    background: linear-gradient(135deg, var(--import-btn), #1d4ed8);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+}
+.import-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+.summary-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px 12px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+.summary-card h3 {
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 6px;
+}
+.summary-card .value {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary);
+}
+.summary-card .value.km { color: var(--secondary); }
+.summary-card .value.baht { color: var(--success); }
+
+.form-card, .list-card, .ref-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+.ref-card {
+    background: #faf7ff;
+    border-left: 4px solid var(--ref);
+}
+.ref-card h3 {
+    font-size: 15px;
+    color: var(--ref);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.ref-card small {
+    color: var(--gray);
+    font-size: 11px;
+    margin-top: 6px;
+    display: block;
+}
+.ref-price {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.ref-price span {
+    font-size: 14px;
+}
+.ref-price strong {
+    color: var(--dark);
+}
+
+/* ===== ✅ กล่องแสดงไมล์ล่าสุด ===== */
+.last-mile-box {
+    background: var(--mile-bg);
+    border-left: 3px solid var(--mile);
+    padding: 8px 12px;
+    margin-top: 8px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--dark);
+}
+
+.last-mile-box strong {
+    color: var(--mile);
+    font-weight: 600;
+}
+
+.use-last-mile-btn {
+    background: var(--mile);
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.use-last-mile-btn:hover {
+    background: #0e7490;
+    transform: scale(1.03);
+}
+
+.use-last-mile-btn:active {
+    transform: scale(0.97);
+}
+
+.form-card h2, .list-header h2 {
+    font-size: 17px;
+    color: var(--dark);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 14px;
+}
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+.form-group input[readonly] {
+    background: #f8fafc;
+    color: var(--gray);
+    cursor: not-allowed;
+}
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary), #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: transform 0.2s;
+}
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.clear-btn {
+    padding: 6px 12px;
+    background: #fee2e2;
+    color: var(--danger);
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.clear-btn:hover {
+    background: #fecaca;
+}
+
+.log-item {
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background 0.2s;
+}
+.log-item:last-child { border-bottom: none; }
+.log-item:hover { background: #f8fafc; }
+.log-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+.log-route-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+.log-from {
+    font-weight: 600;
+    color: var(--primary);
+}
+.log-arrow {
+    color: var(--secondary);
+    font-weight: bold;
+}
+.log-to {
+    font-weight: 600;
+    color: var(--success);
+}
+.log-meta {
+    font-size: 12px;
+    color: var(--gray);
+}
+.log-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 6px 12px;
+    font-size: 13px;
+    color: #475569;
+    margin-top: 8px;
+}
+.log-detail-grid span strong { color: var(--dark); }
+.tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+.tag.full { background: #fef3c7; color: #92400e; }
+.tag.empty { background: #d1fae5; color: #065f46; }
+.delete-small {
+    background: none;
+    border: none;
+    color: #cbd5e1;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.delete-small:hover { color: var(--danger); }
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray);
+}
+.empty-state p { margin-top: 8px; font-size: 14px; }
+
+/* ===== ส่วนกราฟ ===== */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.chart-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+}
+
+.chart-card h3 {
+    font-size: 15px;
+    color: var(--dark);
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.chart-card canvas {
+    max-height: 220px;
+}
+
+@media (max-width: 480px) {
+    main { padding: 12px; }
+    .form-card, .list-card, .ref-card { padding: 16px; }
+    .form-grid { grid-template-columns: 1fr 1fr; }
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-container { grid-template-columns: 1fr; }
+    .chart-card { padding: 16px; }
+    .last-mile-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

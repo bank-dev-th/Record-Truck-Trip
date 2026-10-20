@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บันทึกเที่ยววิ่ง - ส่งออก+นำเข้า</title>
+    
+    <!-- ไลบรารี -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <!-- เชื่อมต่อไฟล์ CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== ส่วนหัวหน้าเว็บ ===== -->
+    <header>
+        <h1>🚛 บันทึกเที่ยววิ่ง</h1>
+        <p>ส่งออกและนำเข้าข้อมูล Excel</p>
+    </header>
+
+    <main>
+        <!-- ===== ปุ่มทำงานหลัก ===== -->
+        <div class="top-buttons">
+            <button class="export-btn" onclick="exportToExcel()">
+                📊 ส่งออกไฟล์ Excel
+            </button>
+            <label class="import-btn">
+                📂 นำเข้าจาก Excel
+                <input type="file" id="importExcel" accept=".xlsx,.xls" style="display: none;">
+            </label>
+        </div>
+
+        <!-- ===== ส่วนสรุปตัวเลข ===== -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h3>📊 จำนวนเที่ยว</h3>
+                <div class="value" id="totalTrips">0</div>
+            </div>
+            <div class="summary-card">
+                <h3>🛣️ รวมระยะทาง</h3>
+                <div class="value km" id="totalKm">0 กม.</div>
+            </div>
+            <div class="summary-card">
+                <h3>💰 รวมค่าขนส่ง</h3>
+                <div class="value" id="totalFare">0 บาท</div>
+            </div>
+            <div class="summary-card">
+                <h3>📦 ตู้หนัก</h3>
+                <div class="value" id="totalFull">0</div>
+            </div>
+            <div class="summary-card">
+                <h3>📭 ตู้เปล่า</h3>
+                <div class="value" id="totalEmpty">0</div>
+            </div>
+        </div>
+
+        <!-- ===== ส่วนแสดงกราฟเดิม ===== -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>📊 จำนวนเที่ยวแยกตามประเภท</h3>
+                <canvas id="typeChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>🛣️ รวมระยะทางแยกตามประเภท</h3>
+                <canvas id="distanceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ===== ส่วนกราฟราคา ===== -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>💰 รวมค่าขนส่งแยกตามประเภท</h3>
+                <canvas id="fareTypeChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>📈 ค่าขนส่งรายวัน (ล่าสุด 7 วัน)</h3>
+                <canvas id="fareDailyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ===== ฟอร์มบันทึกข้อมูล ===== -->
+        <div class="form-card">
+            <h2>📝 บันทึกข้อมูลเที่ยววิ่ง</h2>
+            
+            <form id="tripForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>วันที่</label>
+                        <input type="date" id="tripDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ขนาดตู้</label>
+                        <select id="containerSize" required>
+                            <option value="">-- เลือก --</option>
+                            <option value="20">20 ฟุต</option>
+                            <option value="40">40 ฟุต</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group full">
+                        <label>📍 ต้นทาง</label>
+                        <input type="text" id="startPoint" placeholder="เช่น ลาดกระบัง" required>
+                    </div>
+                    
+                    <div class="form-group full">
+                        <label>🏁 ปลายทาง</label>
+                        <input type="text" id="endPoint" placeholder="เช่น อยุธยา" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>เบอร์ตู้</label>
+                        <input type="text" id="containerNo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>เบอร์หาง</label>
+                        <input type="text" id="trailerNo">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>เวลาออก</label>
+                        <input type="time" id="departTime">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>เวลาถึง</label>
+                        <input type="time" id="arriveTime">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ไมล์ออก</label>
+                        <input type="number" id="mileStart" step="0.1">
+                        <!-- ✅ กล่องแสดงไมล์ล่าสุด -->
+                        <div id="lastMileDisplay" class="last-mile-container"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ไมล์ถึง</label>
+                        <input type="number" id="mileEnd" step="0.1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ระยะทาง</label>
+                        <input type="number" id="distance" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ประเภทตู้</label>
+                        <select id="containerType" required>
+                            <option value="">-- เลือก --</option>
+                            <option value="full">📦 ตู้หนัก</option>
+                            <option value="empty">📭 ตู้เปล่า</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- กล่องแสดงราคาอ้างอิง -->
+                <div class="ref-card" id="refPriceBox" style="display: none;">
+                    <h3>💵 ราคาอ้างอิง</h3>
+                    <div class="ref-price">
+                        <span>📭 ตู้เปล่า: <strong id="refEmptyPrice">-</strong> บาท</span>
+                        <span>📦 ตู้หนัก: <strong id="refFullPrice">-</strong> บาท</span>
+                    </div>
+                    <small>* อ้างอิงเท่านั้น</small>
+                </div>
+
+                <div class="form-group">
+                    <label>ค่าขนส่งจริง (บาท)</label>
+                    <input type="number" id="fare" min="0">
+                </div>
+                
+                <div class="form-group full">
+                    <label>หมายเหตุ</label>
+                    <textarea id="notes" rows="2"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">✅ บันทึกข้อมูล</button>
+            </form>
+        </div>
+
+        <!-- ===== รายการบันทึก ===== -->
+        <div class="list-card">
+            <div class="list-header">
+                <h2>📋 รายการทั้งหมด</h2>
+                <button class="clear-btn" onclick="clearAllData()">🗑️ ล้างข้อมูล</button>
+            </div>
+            
+            <div id="tripList">
+                <div class="empty-state">
+                    <div style="font-size: 48px;">🚛</div>
+                    <p>ยังไม่มีรายการ</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ไฟล์สคริปต์ -->
+    <script src="script.js"></script>
+</body>
+</html>
